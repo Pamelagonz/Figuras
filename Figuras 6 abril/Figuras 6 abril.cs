@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
@@ -12,7 +13,7 @@ namespace WindowsFormsApplication1
     public partial class Form1 : Form
     {
         enum TipoFigura { Rectangulo, Circulo, Triangulo, Recta };
-        enum TipoColor { Red, Black, Blue, Green, Mas };
+        enum TipoColor { Red, Black, Blue, Mas };
         Color color;
         private TipoFigura figura_actual;
         private List<Figura> rectangulos;
@@ -28,52 +29,11 @@ namespace WindowsFormsApplication1
         }
 
 
-
-        private void Form1_MouseClick(object sender, MouseEventArgs e)
-        {
-
-
-            if (MouseButtons.Right == e.Button)
-            {
-
-                contextMenuStrip1.Show(this, e.X, e.Y);
-            }
-            else if (MouseButtons.Left == e.Button)
-            {
-                if (figura_actual == TipoFigura.Circulo)
-                {
-                    Circulo c = new Circulo(e.X, e.Y, this.color);
-                    c.Dibuja(this);
-                    rectangulos.Add(c);
-                }
-                else if (figura_actual == TipoFigura.Rectangulo)
-                {
-                    Rectangulo r = new Rectangulo(e.X, e.Y, this.color);
-                    r.Dibuja(this);
-                    rectangulos.Add(r);
-                }
-
-                else if (figura_actual == TipoFigura.Recta)
-                {
-                    Recta r = new Recta(e.X, e.Y, this.color);
-                    r.Draw(this);
-                    rectangulos.Add(r);
-                }
-
-                else if (figura_actual == TipoFigura.Triangulo)
-                {
-                    Triangulo r = new Triangulo(e.X, e.Y, this.color);
-                    r.Draw(this);
-                    rectangulos.Add(r);
-                }
-            }
-        }
-
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             //Polimorfismo
             foreach (Figura r in rectangulos)
-                r.Dibuja(this);
+                r.Draw(this);
         }
 
         private void circuloToolStripMenuItem_Click(object sender, EventArgs e)
@@ -123,19 +83,6 @@ namespace WindowsFormsApplication1
 
         }
 
-        private void másColoresToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
-            {
-                color_actual = colorDialog1.Color;
-
-            }
-            this.rojoToolStripMenuItem.Checked = false;
-            this.azulToolStripMenuItem.Checked = false;
-            this.negroToolStripMenuItem.Checked = false;
-            this.másColoresToolStripMenuItem.Checked = true;
-            color_actual = TipoColor.Mas;
-        }
 
         private void azulToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -166,5 +113,52 @@ namespace WindowsFormsApplication1
             rectangulos.Clear();
             this.Invalidate();
         }
+
+        private void masColoresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                color = colorDialog1.Color;
+
+            }
+        }
+
+        private void Form1_MouseClick(object sender, MouseEventArgs e)
+        {
+             if (MouseButtons.Right == e.Button)
+            {
+
+                contextMenuStrip1.Show(this, e.X, e.Y);
+            }
+            else if (MouseButtons.Left == e.Button)
+            {
+                if (figura_actual == TipoFigura.Circulo)
+                {
+                    Circulo c = new Circulo(e.X, e.Y, this.color);
+                    c.Draw(this);
+                    rectangulos.Add(c);
+                }
+                else if (figura_actual == TipoFigura.Rectangulo)
+                {
+                    Rectangulo r = new Rectangulo(e.X, e.Y, this.color);
+                    r.Draw(this);
+                    rectangulos.Add(r);
+                }
+
+                else if (figura_actual == TipoFigura.Recta)
+                {
+                    Recta r = new Recta(e.X, e.Y, this.color);
+                    r.Draw(this);
+                    rectangulos.Add(r);
+                }
+
+                else if (figura_actual == TipoFigura.Triangulo)
+                {
+                    Triangulo r = new Triangulo(e.X, e.Y, this.color);
+                    r.Draw(this);
+                    rectangulos.Add(r);
+                }
+        }
     }
 }
+    }

@@ -7,28 +7,28 @@ namespace WindowsFormsApplication1
 {
     abstract class Figura:IComparable
     {
-        protected int X, Y;
+        protected int X;
+        protected int Y;
         protected Pen pluma;
         protected SolidBrush brocha;
         protected Color color;
         protected int ancho;
         protected int largo;
-        protected Color TColor;
 
 
         public Figura(int x,int y, Color color)
         {
             X=x;
             Y=y;
-            this.color= Color.Blue;
             brocha = new SolidBrush(color);
             pluma=new Pen(color,2);
+            this.color = Color.Black;
             Random ra = new Random();
             ancho = ra.Next(10, 60);
             largo=ancho;
         }
 
-        public abstract void Dibuja(Form f);
+        public abstract void Draw(Form f);
 
         public int CompareTo(object obj)
         {
@@ -42,11 +42,11 @@ namespace WindowsFormsApplication1
             : base(x, y,color)
         {
         }
-        public override void Dibuja(Form f)
+        public override void Draw(Form f)
         {
             Graphics g = f.CreateGraphics();
             g.DrawRectangle(pluma, this.X, this.Y, ancho, largo);
-            g.FillEllipse(brocha, this.X, this.Y, ancho, largo);
+            g.FillRectangle(brocha, this.X, this.Y, ancho, largo);
         }
     }
 
@@ -56,7 +56,7 @@ namespace WindowsFormsApplication1
             : base(x, y,color)
         {
         }
-        public override void Dibuja(Form f)
+        public override void Draw(Form f)
         {
             Graphics g = f.CreateGraphics();
             g.DrawEllipse(pluma, this.X, this.Y, ancho, largo);
@@ -67,17 +67,16 @@ namespace WindowsFormsApplication1
     class Recta : Figura
     {
         public Recta(int x, int y, Color color)
-            : base(x, y,color)
+            : base(x, y, color)
         {
-
         }
-
         public override void Draw(Form f)
         {
             Graphics g = f.CreateGraphics();
             g.DrawLine(pluma, this.X, this.Y, ancho, largo);
         }
     }
+    
 
     class Triangulo : Figura
     {
