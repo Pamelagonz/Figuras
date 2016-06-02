@@ -7,34 +7,23 @@ namespace WindowsFormsApplication1
 {
     abstract class Figura
     {
-        protected int X, Y;
-        protected Pen pluma;
-        protected SolidBrush brocha;
-         
-        protected Color color;
-        protected int ancho;
-        protected int largo;
+        public int X, Y;
+        public Pen pluma;
+        public Brush brocha;
+        public Color color_relleno;
+        public int ancho, largo;
 
         public Figura(int x,int y)
         {
             X=x;
             Y=y;
-            brocha = new SolidBrush(Color.Orange);
             pluma=new Pen(Color.Red,2);
             //Random red = new Random();
-            
-
-            Random ra = new Random();
-            ancho = ra.Next(10, 60);
-            largo = ancho;
+            ancho = //red.Next(10, 60);
+            largo=10;
         }
 
         public abstract void Dibuja(Form f);
-
-        public int CompareTo(object obj)
-        {
-            return this.largo.CompareTo(((Figura)obj).largo);
-        }
     }
 
     class Rectangulo : Figura
@@ -46,8 +35,7 @@ namespace WindowsFormsApplication1
         public override void Dibuja(Form f)
         {
             Graphics g = f.CreateGraphics();
-            g.DrawRectangle(pluma, this.X, this.Y, ancho, largo);
-            g.FillRectangle(brocha, this.X, this.Y, ancho, largo);
+            g.DrawRectangle(pluma, X, Y, ancho, largo);
         }
     }
 
@@ -59,8 +47,7 @@ class Circulo:Figura
             public override void Dibuja(Form f)
         {
             Graphics g=f.CreateGraphics();
-            g.DrawEllipse(pluma, this.X, this.Y, ancho, largo);
-            g.FillEllipse(brocha, this.X, this.Y, ancho, largo);
+            g.DrawEllipse(pluma, X, Y, ancho, largo);
     }
 }
 }
